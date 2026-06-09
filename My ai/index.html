@@ -1,0 +1,261 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Nova</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Libre+Baskerville:wght@700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+      <aside class="sidebar" id="sidebar" aria-label="Main navigation">
+        <div class="brand">
+          <div class="brand-mark" aria-hidden="true">N</div>
+          <div>
+            <p>Nova</p>
+            <span>Neural chat</span>
+          </div>
+        </div>
+
+        <button class="new-chat" type="button" id="newChatButton">
+          <span aria-hidden="true">+</span>
+          New chat
+        </button>
+
+        <nav class="nav-group" aria-label="Workspace">
+          <button class="nav-item active" type="button" data-mode="general">
+            <span aria-hidden="true">C</span>
+            Chat
+          </button>
+          <button class="nav-item" type="button">
+            <span aria-hidden="true">S</span>
+            Search chats
+          </button>
+          <button class="nav-item" type="button">
+            <span aria-hidden="true">L</span>
+            Library
+          </button>
+          <button class="nav-item" type="button">
+            <span aria-hidden="true">D</span>
+            Discover
+          </button>
+        </nav>
+
+        <nav class="nav-group recent-list" aria-label="Recent chats">
+          <p class="nav-title">Recent</p>
+          <button class="nav-item" type="button" data-mode="write">
+            Draft a better message
+          </button>
+          <button class="nav-item" type="button" data-mode="plan">
+            Weekly study plan
+          </button>
+          <button class="nav-item" type="button" data-mode="translate">
+            Translate a paragraph
+          </button>
+          <button class="nav-item" type="button" data-mode="code">
+            Explain JavaScript bug
+          </button>
+          <button class="nav-item" type="button" data-mode="sources">
+            Answers with sources
+          </button>
+        </nav>
+
+        <nav class="nav-group" aria-label="Shortcuts">
+          <p class="nav-title">Shortcuts</p>
+          <button class="nav-item" type="button">
+            <span aria-hidden="true">P</span>
+            Prompt templates
+          </button>
+          <button class="nav-item" type="button">
+            <span aria-hidden="true">*</span>
+            Starred
+          </button>
+          <button class="nav-item" type="button">
+            <span aria-hidden="true">#</span>
+            Prompts
+          </button>
+        </nav>
+
+        <div class="sidebar-footer">
+          <div class="nav-status">
+            <span></span>
+            Groq connected locally
+          </div>
+          <button class="nav-item nav-footer-item" type="button" id="authButton">
+            <span aria-hidden="true">@</span>
+            Login or sign up
+          </button>
+          <button class="nav-item nav-footer-item" type="button" id="clearChatButton">
+            <span aria-hidden="true">x</span>
+            Clear chat
+          </button>
+          <button class="nav-item nav-footer-item" type="button" id="settingsButton">
+            <span aria-hidden="true">?</span>
+            Settings
+          </button>
+          <div class="account-card" id="accountButton" role="button" tabindex="0">
+            <label class="profile-photo" for="profileInput" aria-label="Change profile picture">
+              <img id="profilePreview" alt="" />
+              <span id="profileInitial">U</span>
+            </label>
+            <input id="profileInput" type="file" accept="image/*" />
+            <span>
+              <strong id="accountName">Guest User</strong>
+              <small id="accountEmail">Not signed in</small>
+            </span>
+          </div>
+        </div>
+      </aside>
+
+      <main class="chat-panel">
+        <header class="topbar">
+          <button class="menu-button" type="button" id="menuButton" aria-label="Open navigation">
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
+          <div>
+            <p class="eyebrow">Nova</p>
+            <h1>What do you want to explore?</h1>
+          </div>
+          <div class="top-actions" aria-label="Chat settings">
+            <button class="theme-switch" type="button" id="themeToggle" aria-label="Switch color mode">
+              <span class="theme-scene" aria-hidden="true">
+                <span class="theme-stars"></span>
+                <span class="theme-cloud one"></span>
+                <span class="theme-cloud two"></span>
+                <span class="theme-knob"></span>
+              </span>
+              <span id="themeText">Dark</span>
+            </button>
+          </div>
+        </header>
+
+        <section class="welcome-panel" id="welcomePanel" aria-label="Start a chat">
+          <div>
+            <p class="welcome-kicker">Start a fresh conversation</p>
+            <h2>Ask a question and Nova will answer in your feed.</h2>
+          </div>
+        </section>
+
+        <section class="feature-strip" id="featureStrip" aria-label="Quick actions">
+          <button class="quick-card" type="button" data-prompt="Explain this topic in very simple words.">
+            <span>Explain</span>
+            Make hard topics easy
+          </button>
+          <button class="quick-card" type="button" data-prompt="Write a clean message for this situation:">
+            <span>Write</span>
+            Draft messages fast
+          </button>
+          <button class="quick-card" type="button" data-prompt="Give me a step by step plan for:">
+            <span>Plan</span>
+            Turn ideas into steps
+          </button>
+          <button class="quick-card" type="button" data-prompt="Check this text and improve it:">
+            <span>Improve</span>
+            Fix text and clarity
+          </button>
+          <button class="quick-card" type="button" data-prompt="Answer this and include source links if you have reliable ones:">
+            <span>Sources</span>
+            Show links when available
+          </button>
+        </section>
+
+        <section class="chat-window" aria-live="polite" id="chatWindow"></section>
+
+        <form class="composer" id="chatForm">
+          <button class="icon-button" type="button" aria-label="Attach file">+</button>
+          <textarea
+            id="messageInput"
+            rows="1"
+            placeholder="Type your message here..."
+            aria-label="Message"
+          ></textarea>
+          <label class="composer-tone" aria-label="Tone">
+            <span class="tone-label">Tone</span>
+            <select id="toneSelect">
+              <option>Simple</option>
+              <option>Friendly</option>
+              <option>Professional</option>
+              <option>Detailed</option>
+            </select>
+            <span class="tone-chevron" aria-hidden="true">⌄</span>
+          </label>
+          <button class="send-button" type="submit">Send</button>
+        </form>
+      </main>
+    </div>
+
+    <div class="modal-backdrop" id="authModal" aria-hidden="true">
+      <section class="modal auth-modal" role="dialog" aria-modal="true" aria-labelledby="authTitle">
+        <button class="modal-close" type="button" data-close-modal aria-label="Close">x</button>
+        <p class="eyebrow">Account</p>
+        <h2 id="authTitle">Login or sign up</h2>
+        <form id="authForm" class="modal-form">
+          <label>
+            Email
+            <input id="authEmail" type="email" placeholder="you@example.com" required />
+          </label>
+          <label>
+            Create password
+            <input id="authPassword" type="password" placeholder="Create a secure password" required minlength="6" />
+          </label>
+          <button class="primary-action" type="submit">Continue</button>
+        </form>
+        <div class="divider"><span>or</span></div>
+        <button class="google-button" type="button" id="googleButton">
+          <span>G</span>
+          Continue with Google
+        </button>
+        <button class="guest-button" type="button" id="guestButton">
+          Continue as guest
+        </button>
+      </section>
+    </div>
+
+    <div class="modal-backdrop" id="settingsModal" aria-hidden="true">
+      <section class="modal settings-modal" role="dialog" aria-modal="true" aria-labelledby="settingsTitle">
+        <button class="modal-close" type="button" data-close-modal aria-label="Close">x</button>
+        <p class="eyebrow">Control room</p>
+        <h2 id="settingsTitle">Settings</h2>
+        <form id="settingsForm" class="settings-grid">
+          <label>
+            Display name
+            <input id="displayNameInput" type="text" placeholder="Your name" />
+          </label>
+          <label>
+            Date of birth
+            <input id="dobInput" type="date" />
+          </label>
+          <label>
+            Email
+            <input id="settingsEmailInput" type="email" placeholder="you@example.com" />
+          </label>
+          <label>
+            Assistant style
+            <select id="styleInput">
+              <option>Interactive</option>
+              <option>Short</option>
+              <option>Deep</option>
+              <option>Playful</option>
+            </select>
+          </label>
+          <label class="wide">
+            Bio
+            <textarea id="bioInput" rows="3" placeholder="What should Nova know about you?"></textarea>
+          </label>
+          <button class="primary-action wide" type="submit">Save settings</button>
+        </form>
+      </section>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
